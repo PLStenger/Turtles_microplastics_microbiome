@@ -6,10 +6,10 @@
 ###############################################################
 
 
-WORKING_DIRECTORY=/scratch_vol1/fungi/dugong_microbiome/05_QIIME2
-OUTPUT=/scratch_vol1/fungi/dugong_microbiome/05_QIIME2/visual
+WORKING_DIRECTORY=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/05_QIIME2
+OUTPUT=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/05_QIIME2/visual
 
-DATABASE=/scratch_vol1/fungi/dugong_microbiome/98_database_files
+DATABASE=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files
 TMPDIR=/scratch_vol1
 
 
@@ -53,11 +53,11 @@ echo $TMPDIR
 ######
 ######qiime tools import --type 'FeatureData[Taxonomy]' \
 ######  --input-format HeaderlessTSVTaxonomyFormat \
-######  --input-path /Users/pierre-louisstenger/Documents/PostDoc_02_MetaBarcoding_IAC/02_Data/07_dugong_microbiome/dugong_microbiome/98_database_files/silva_nr99_v138_wSpecies_train_set.fa \
+######  --input-path /Users/pierre-louisstenger/Documents/PostDoc_02_MetaBarcoding_IAC/02_Data/07_Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/silva_nr99_v138_wSpecies_train_set.fa \
 ######  --output-path taxonomy/RefTaxo.qza
 ######
 ######qiime tools import --type 'FeatureData[Sequence]' \
-######  --input-path /Users/pierre-louisstenger/Documents/PostDoc_02_MetaBarcoding_IAC/02_Data/07_dugong_microbiome/dugong_microbiome/98_database_files/silva_nr99_v138_wSpecies_train_set.fa \
+######  --input-path /Users/pierre-louisstenger/Documents/PostDoc_02_MetaBarcoding_IAC/02_Data/07_Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/silva_nr99_v138_wSpecies_train_set.fa \
 ######  --output-path taxonomy/DataSeq.qza
 ######
 ######   
