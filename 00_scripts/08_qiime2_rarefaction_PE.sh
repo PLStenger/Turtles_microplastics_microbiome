@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-WORKING_DIRECTORY=/scratch_vol1/fungi/dugong_microbiome/05_QIIME2
-DATABASE=/scratch_vol1/fungi/dugong_microbiome/98_database_files
+WORKING_DIRECTORY=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/05_QIIME2
+DATABASE=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files
 TMPDIR=/scratch_vol1
 
 # Aim: rarefy a feature table to compare alpha/beta diversity results
@@ -18,7 +18,7 @@ conda activate qiime2-2021.4
 export TMPDIR='/scratch_vol1/fungi'
 echo $TMPDIR
 
-# Note: max-depth should be chosen based on ConTable.qzv (or on /scratch_vol1/fungi/dugong_microbiome/05_QIIME2/export/visual/ConTable/sample-frequency-detail.csv)
+# Note: max-depth should be chosen based on ConTable.qzv (or on /scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/05_QIIME2/export/visual/ConTable/sample-frequency-detail.csv)
 
 #   --i-table core/ConTable.qza \
 
