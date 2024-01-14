@@ -6,8 +6,8 @@
 # Correct tool citation : Andrews, S. (2010). FastQC: a quality control tool for high throughput sequence data.
 
 
-WORKING_DIRECTORY=/scratch_vol1/fungi/Turtles_microplastics_microbiome/01_raw_data
-OUTPUT=/scratch_vol1/fungi/Turtles_microplastics_microbiome/02_quality_check
+WORKING_DIRECTORY=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/01_raw_data
+OUTPUT=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/02_quality_check
 
 # Make the directory (mkdir) only if not existe already(-p)
 mkdir -p $OUTPUT
