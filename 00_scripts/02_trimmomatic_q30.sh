@@ -9,7 +9,7 @@ OUTPUT=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastic
 # Make the directory (mkdir) only if not existe already(-p)
 mkdir -p $OUTPUT
 
-ADAPTERFILE=/scratch_vol1/fungi/Turtles_microplastics_microbiome/99_softwares/adapters_sequences.fasta
+ADAPTERFILE=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/99_softwares/adapters_sequences.fasta
 
 # Arguments :
 # ILLUMINACLIP:"$ADAPTERFILE":2:30:10 LEADING:30 TRAILING:30 SLIDINGWINDOW:26:30 MINLEN:150
