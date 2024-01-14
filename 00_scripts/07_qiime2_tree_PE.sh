@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-WORKING_DIRECTORY=/scratch_vol1/fungi/dugong_microbiome/05_QIIME2
-OUTPUT=/scratch_vol1/fungi/dugong_microbiome/05_QIIME2/visual
+WORKING_DIRECTORY=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/05_QIIME2
+OUTPUT=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/05_QIIME2/visual
 TMPDIR=/scratch_vol1
 
 # Make the directory (mkdir) only if not existe already(-p)
