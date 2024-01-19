@@ -2,6 +2,7 @@
 
 WORKING_DIRECTORY=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/03_cleaned_data
 OUTPUT=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/05_QIIME2
+NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/manifest_negative_control
 
 # Make the directory (mkdir) only if not existe already(-p)
 mkdir -p $OUTPUT
@@ -38,6 +39,15 @@ qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' \
 cd $OUTPUT
 
 qiime demux summarize --i-data core/demux.qza --o-visualization visual/demux.qzv
+
+qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' \
+			    --input-path  $NEG_CONTROL \
+			    --output-path $OUTPUT/core/contamination_seq.qza \
+			    --input-format PairedEndFastqManifestPhred33V2
+
+cd $OUTPUT
+
+qiime demux summarize --i-data core/contamination_seq.qza --o-visualization visual/contamination_seq.qzv
 
 # for vizualisation :
 # https://view.qiime2.org
