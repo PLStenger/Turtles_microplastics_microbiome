@@ -55,3 +55,7 @@ qiime demux summarize --i-data core/contamination_seq.qza --o-visualization visu
 qiime tools export --input-path visual/demux.qzv --output-path export/visual/demux
 qiime tools export --input-path core/demux.qza --output-path export/core/demux
 
+
+qiime tools export --input-path visual/contamination_seq.qzv --output-path export/visual/contamination_seq
+qiime tools export --input-path core/contamination_seq.qza --output-path export/core/contamination_seq
+
