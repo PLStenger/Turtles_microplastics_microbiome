@@ -41,6 +41,8 @@ echo $TMPDIR
 
 # https://github.com/benjjneb/dada2/issues/477
 
+cd $WORKING_DIRECTORY
+
 qiime dada2 denoise-paired --i-demultiplexed-seqs core/demux.qza \
 --o-table core/Table.qza  \
 --o-representative-sequences core/RepSeq.qza \
@@ -70,7 +72,6 @@ qiime dada2 denoise-paired --i-demultiplexed-seqs core/demux.qza \
 #  --input-path $NEG_CONTROL/contamination_seq.fasta \
 #  --output-path $NEG_CONTROL/contamination_seq.qza \
 #  --type 'FeatureData[Sequence]'
-
 
 qiime quality-control exclude-seqs --i-query-sequences core/RepSeq.qza \
       					     --i-reference-sequences core/contamination_seq.qza \
