@@ -33,6 +33,8 @@ echo $TMPDIR
         
 mv core/RarTable.qza subtables/RarTable-all.qza
 
+mv core/Table.qza subtables/Table-all.qza
+
  
 # Aim: Identify "core" features, which are features observed,
      # in a user-defined fraction of the samples
@@ -48,5 +50,19 @@ qiime tools export --input-path subtables/RarTable-all.qza --output-path export/
 qiime tools export --input-path visual/CoreBiom-all.qzv --output-path export/visual/CoreBiom-all
 biom convert -i export/subtables/RarTable-all/feature-table.biom -o export/subtables/RarTable-all/table-from-biom.tsv --to-tsv
 sed '1d ; s/\#OTU ID/ASV_ID/' export/subtables/RarTable-all/table-from-biom.tsv > export/subtables/RarTable-all/ASV.tsv
+
+
+
+qiime feature-table core-features \
+        --i-table subtables/Table-all.qza \
+        --p-min-fraction 0.1 \
+        --p-max-fraction 1.0 \
+        --p-steps 10 \
+        --o-visualization visual/CoreBiom-all-not-rar.qzv  
+        
+qiime tools export --input-path subtables/Table-all.qza --output-path export/subtables/Table-all    
+qiime tools export --input-path visual/CoreBiom-all-not-rar.qzv --output-path export/visual/CoreBiom-all-not-rar
+biom convert -i export/subtables/Table-all/feature-table.biom -o export/subtables/Table-all/table-from-biom.tsv --to-tsv
+sed '1d ; s/\#OTU ID/ASV_ID/' export/subtables/Table-all/table-from-biom.tsv > export/subtables/Table-all/ASV.tsv
 
 
