@@ -71,10 +71,6 @@ qiime dada2 denoise-paired --i-demultiplexed-seqs core/demux.qza \
 #  --output-path $NEG_CONTROL/contamination_seq.qza \
 #  --type 'FeatureData[Sequence]'
 
-qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' \
-			    --input-path  $NEG_CONTROL \
-			    --output-path core/contamination_seq.qza \
-			    --input-format PairedEndFastqManifestPhred33V2
 
 qiime quality-control exclude-seqs --i-query-sequences core/RepSeq.qza \
       					     --i-reference-sequences core/contamination_seq.qza \
