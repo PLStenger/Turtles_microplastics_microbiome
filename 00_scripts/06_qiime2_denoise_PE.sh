@@ -8,6 +8,7 @@ OUTPUT=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastic
 mkdir -p $OUTPUT
 
 METADATA=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/sample-metadata.tsv
+METADATA_NEG=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/sample-metadata_neg.tsv
 # negative control sample :
 # NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/manifest_negative_control
 NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/99_contamination
@@ -67,11 +68,22 @@ qiime dada2 denoise-paired --i-demultiplexed-seqs core/demux.qza \
 # CATCH some ASV Solanum_crop_diversity/05_QIIME2/TUFA/export/core/RepSeq
 # Blast them in order to catch non necessaries ASV (uncultured, unknown, etc..)
 # Paste them in a contamination_seq.fasta file, then :
+
+qiime dada2 denoise-paired --i-demultiplexed-seqs core/contamination_seq.qza \
+--o-table core/Table_neg.qza  \
+--o-representative-sequences core/RepSeq_neg.qza \
+--o-denoising-stats core/Stats_neg.qza \
+--p-trim-left-f 0 \
+--p-trim-left-r 0 \
+--p-trunc-len-f 0 \
+--p-trunc-len-r 0 \
+--p-n-threads 4  
  
-qiime tools import \
-  --input-path $NEG_CONTROL/contamination_seq.fasta \
-  --output-path $NEG_CONTROL/contamination_seq.qza \
-  --type 'FeatureData[Sequence]'
+
+#qiime tools import \
+#  --input-path $NEG_CONTROL/contamination_seq.fasta \
+#  --output-path $NEG_CONTROL/contamination_seq.qza \
+#  --type 'FeatureData[Sequence]'
 
 # qiime dada2 denoise-paired --i-demultiplexed-seqs core/contamination_seq.qza \
 #  --o-table core/Table_neg.qza  \
@@ -82,15 +94,15 @@ qiime tools import \
 #  --p-trunc-len-f 0 \
 #  --p-trunc-len-r 0 \
 #  --p-n-threads 4 
-# 
-# qiime quality-control exclude-seqs --i-query-sequences core/RepSeq.qza \
-#       					     --i-reference-sequences core/RepSeq_neg.qza \
-#       					     --p-method vsearch \
-#       					     --p-threads 6 \
-#       					     --p-perc-identity 1.00 \
-#       					     --p-perc-query-aligned 1.00 \
-#       					     --o-sequence-hits core/HitNegCtrl.qza \
-#       					     --o-sequence-misses core/NegRepSeq.qza
+ 
+qiime quality-control exclude-seqs --i-query-sequences core/RepSeq.qza \
+       					     --i-reference-sequences core/RepSeq_neg.qza \
+       					     --p-method vsearch \
+       					     --p-threads 6 \
+       					     --p-perc-identity 1.00 \
+       					     --p-perc-query-aligned 1.00 \
+       					     --o-sequence-hits core/HitNegCtrl.qza \
+                 --o-sequence-misses core/NegRepSeq.qza
        
 
 # table_contamination_filter :
@@ -141,20 +153,24 @@ qiime feature-table filter-seqs --i-data core/NegRepSeq.qza \
        # Use: qiime feature-table tabulate-seqs [OPTIONS]
 
 qiime feature-table summarize --i-table core/Table.qza --m-sample-metadata-file $METADATA --o-visualization visual/Table.qzv
+qiime feature-table summarize --i-table core/Table_neg.qza --m-sample-metadata-file $METADATA --o-visualization visual/Table.qzv
 qiime feature-table summarize --i-table core/ConTable.qza --m-sample-metadata-file $METADATA --o-visualization visual/ConTable.qzv
 qiime feature-table summarize --i-table core/NegTable.qza --m-sample-metadata-file $METADATA --o-visualization visual/NegTable.qzv
 qiime feature-table tabulate-seqs --i-data core/NegRepSeq.qza --o-visualization visual/NegRepSeq.qzv
 qiime feature-table tabulate-seqs --i-data core/RepSeq.qza --o-visualization visual/RepSeq.qzv
+qiime feature-table tabulate-seqs --i-data core/RepSeq_neg.qza --o-visualization visual/RepSeq_neg.qzv
 qiime feature-table tabulate-seqs --i-data core/HitNegCtrl.qza --o-visualization visual/HitNegCtrl.qzv
 
 mkdir -p export/core
 mkdir -p export/visual
 
 qiime tools export --input-path core/Table.qza --output-path export/core/Table
+qiime tools export --input-path core/Table_neg.qza --output-path export/core/Table_neg
 qiime tools export --input-path core/ConTable.qza --output-path export/core/ConTable
 qiime tools export --input-path core/NegTable.qza --output-path export/core/NegTable
 qiime tools export --input-path core/NegRepSeq.qza --output-path export/core/NegRepSeq
 qiime tools export --input-path core/RepSeq.qza --output-path export/core/RepSeq
+qiime tools export --input-path core/RepSeq_neg.qza --output-path export/core/RepSeq_neg
 qiime tools export --input-path core/HitNegCtrl.qza --output-path export/core/HitNegCtrl
 qiime tools export --input-path core/ConRepSeq.qza --output-path export/core/ConRepSeq
 qiime tools export --input-path core/Stats.qza  --output-path export/core/Stats
@@ -165,3 +181,9 @@ qiime tools export --input-path visual/Table.qzv --output-path export/visual/Tab
 qiime tools export --input-path visual/HitNegCtrl.qzv --output-path export/visual/HitNegCtrl
 qiime tools export --input-path visual/RepSeq.qzv --output-path export/visual/RepSeq
 qiime tools export --input-path visual/NegRepSeq.qzv --output-path export/visual/NegRepSeq
+
+
+#test
+qiime tools export --input-path visual/contamination_seq.qzv --output-path export/visual/contamination_seq
+qiime tools export --input-path core/contamination_seq.qza --output-path export/core/contamination_seq
+qiime tools export --input-path core/RepSeq_neg.qza --output-path export/core/RepSeq_neg
