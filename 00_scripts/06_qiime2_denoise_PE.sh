@@ -9,8 +9,8 @@ mkdir -p $OUTPUT
 
 METADATA=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/sample-metadata.tsv
 # negative control sample :
-NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/manifest_negative_control
-#NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/99_contamination
+# NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/manifest_negative_control
+NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/99_contamination
 #NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/05_QIIME2/Original_reads_16S_ITS_18S_negative_control/core/RepSeq_negative_control.qza
 
 TMPDIR=/scratch_vol1
@@ -68,29 +68,29 @@ qiime dada2 denoise-paired --i-demultiplexed-seqs core/demux.qza \
 # Blast them in order to catch non necessaries ASV (uncultured, unknown, etc..)
 # Paste them in a contamination_seq.fasta file, then :
  
-#qiime tools import \
-#  --input-path $NEG_CONTROL/contamination_seq.fasta \
-#  --output-path $NEG_CONTROL/contamination_seq.qza \
-#  --type 'FeatureData[Sequence]'
+qiime tools import \
+  --input-path $NEG_CONTROL/contamination_seq.fasta \
+  --output-path $NEG_CONTROL/contamination_seq.qza \
+  --type 'FeatureData[Sequence]'
 
-qiime dada2 denoise-paired --i-demultiplexed-seqs core/contamination_seq.qza \
- --o-table core/Table_neg.qza  \
- --o-representative-sequences core/RepSeq_neg.qza \
- --o-denoising-stats core/Stats_neg.qza \
- --p-trim-left-f 0 \
- --p-trim-left-r 0 \
- --p-trunc-len-f 0 \
- --p-trunc-len-r 0 \
- --p-n-threads 4 
-
-qiime quality-control exclude-seqs --i-query-sequences core/RepSeq.qza \
-      					     --i-reference-sequences core/RepSeq_neg.qza \
-      					     --p-method vsearch \
-      					     --p-threads 6 \
-      					     --p-perc-identity 1.00 \
-      					     --p-perc-query-aligned 1.00 \
-      					     --o-sequence-hits core/HitNegCtrl.qza \
-      					     --o-sequence-misses core/NegRepSeq.qza
+# qiime dada2 denoise-paired --i-demultiplexed-seqs core/contamination_seq.qza \
+#  --o-table core/Table_neg.qza  \
+#  --o-representative-sequences core/RepSeq_neg.qza \
+#  --o-denoising-stats core/Stats_neg.qza \
+#  --p-trim-left-f 0 \
+#  --p-trim-left-r 0 \
+#  --p-trunc-len-f 0 \
+#  --p-trunc-len-r 0 \
+#  --p-n-threads 4 
+# 
+# qiime quality-control exclude-seqs --i-query-sequences core/RepSeq.qza \
+#       					     --i-reference-sequences core/RepSeq_neg.qza \
+#       					     --p-method vsearch \
+#       					     --p-threads 6 \
+#       					     --p-perc-identity 1.00 \
+#       					     --p-perc-query-aligned 1.00 \
+#       					     --o-sequence-hits core/HitNegCtrl.qza \
+#       					     --o-sequence-misses core/NegRepSeq.qza
        
 
 # table_contamination_filter :
