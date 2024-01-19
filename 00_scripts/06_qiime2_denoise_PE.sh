@@ -9,8 +9,8 @@ mkdir -p $OUTPUT
 
 METADATA=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/sample-metadata.tsv
 # negative control sample :
-#NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/Negative_control_Sample_RepSeq_V4.qza
-NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/99_contamination
+NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/98_database_files/manifest_negative_control
+#NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/99_contamination
 #NEG_CONTROL=/scratch_vol1/fungi/Turtles_microplastics_microbiome/Turtles_microplastics_microbiome/05_QIIME2/Original_reads_16S_ITS_18S_negative_control/core/RepSeq_negative_control.qza
 
 TMPDIR=/scratch_vol1
@@ -66,19 +66,25 @@ qiime dada2 denoise-paired --i-demultiplexed-seqs core/demux.qza \
 # Blast them in order to catch non necessaries ASV (uncultured, unknown, etc..)
 # Paste them in a contamination_seq.fasta file, then :
  
-qiime tools import \
-  --input-path $NEG_CONTROL/contamination_seq.fasta \
-  --output-path $NEG_CONTROL/contamination_seq.qza \
-  --type 'FeatureData[Sequence]'
+#qiime tools import \
+#  --input-path $NEG_CONTROL/contamination_seq.fasta \
+#  --output-path $NEG_CONTROL/contamination_seq.qza \
+#  --type 'FeatureData[Sequence]'
+
+qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' \
+			    --input-path  $NEG_CONTROL \
+			    --output-path core/contamination_seq.qza \
+			    --input-format PairedEndFastqManifestPhred33V2
 
 qiime quality-control exclude-seqs --i-query-sequences core/RepSeq.qza \
-      					     --i-reference-sequences $NEG_CONTROL/contamination_seq.qza \
+      					     --i-reference-sequences core/contamination_seq.qza \
       					     --p-method vsearch \
       					     --p-threads 6 \
       					     --p-perc-identity 1.00 \
       					     --p-perc-query-aligned 1.00 \
       					     --o-sequence-hits core/HitNegCtrl.qza \
       					     --o-sequence-misses core/NegRepSeq.qza
+       
 
 # table_contamination_filter :
 ##############################
