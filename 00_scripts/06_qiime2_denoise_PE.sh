@@ -73,8 +73,18 @@ qiime dada2 denoise-paired --i-demultiplexed-seqs core/demux.qza \
 #  --output-path $NEG_CONTROL/contamination_seq.qza \
 #  --type 'FeatureData[Sequence]'
 
+qiime dada2 denoise-paired --i-demultiplexed-seqs core/contamination_seq.qza \
+ --o-table core/Table_neg.qza  \
+ --o-representative-sequences core/RepSeq_neg.qza \
+ --o-denoising-stats core/Stats_neg.qza \
+ --p-trim-left-f 0 \
+ --p-trim-left-r 0 \
+ --p-trunc-len-f 0 \
+ --p-trunc-len-r 0 \
+ --p-n-threads 4 
+
 qiime quality-control exclude-seqs --i-query-sequences core/RepSeq.qza \
-      					     --i-reference-sequences core/contamination_seq.qza \
+      					     --i-reference-sequences core/RepSeq_neg.qza \
       					     --p-method vsearch \
       					     --p-threads 6 \
       					     --p-perc-identity 1.00 \
